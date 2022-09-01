@@ -2,6 +2,16 @@
 let rock = 0;
 let paper = 1;
 let scissors = 2;
+let selection = " "
+
+const buttons = document.querySelectorAll('button');
+
+buttons.forEach((button) => {
+    button.addEventListener("click", function() {
+        selection = button.id
+        play(selection)
+    })
+})
 
 
 
@@ -19,11 +29,9 @@ function getComputerChoice(){
     }
 }
 
-function play(){
-    let playerSelection = prompt("Choose Rock, Paper, or Scissors");
-    playerSelection.toLowerCase();
+function play(playerSelection){
+    
     let computerSelection = getComputerChoice();
-    console.log(computerSelection)
 
     if (checkWin(playerSelection, computerSelection) === "draw"){
         alert("It was a draw! Try again!");
@@ -60,5 +68,3 @@ function checkWin(playerChoice, computerChoice){
         return "loss";
     }
 }
-
-console.log(play())
