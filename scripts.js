@@ -12,6 +12,7 @@ let draw = 0;
 const display = document.querySelector('.display');
 const scoreboard = document.querySelector('.scoreboard');
 const buttons = document.querySelectorAll('button');
+const results = document.querySelector('.result');
 
 const wins = document.createElement('div');
 wins.setAttribute('id', 'wins');
@@ -29,6 +30,11 @@ scoreboard.append(wins);
 scoreboard.append(losses);
 scoreboard.append(draws);
 
+const gameResult = document.createElement('div');
+gameResult.setAttribute('id', 'gameResult');
+gameResult.textContent = "Pick your choice!";
+
+results.append(gameResult);
 
 buttons.forEach((button) => {
     button.addEventListener("click", function() {
@@ -52,28 +58,44 @@ function getComputerChoice(){
 }
 
 function play(playerSelection){
-    
+
     let computerSelection = getComputerChoice();
 
     if (checkWin(playerSelection, computerSelection) === "draw"){
         draw += 1
-        document.getElementById('draws').textContent = "Draws: " + draw.toString() 
-        alert("It was a draw! Try again!");
+        document.getElementById('draws').textContent = "Draws: " + draw.toString(); 
+        document.getElementById('gameResult').textContent = "It was a draw!";
     }
     else if(checkWin(playerSelection, computerSelection) === "win"){
         win += 1;
-        document.getElementById('wins').textContent = "Wins: " + win.toString() 
-        alert("You have won!");
+        document.getElementById('wins').textContent = "Wins: " + win.toString();
+        document.getElementById('gameResult').textContent = playerSelection + " beats " + computerSelection + "!";
     }
     else {
         loss += 1;
-        document.getElementById('losses').textContent = "Losses: " + loss.toString() 
-        alert("You have lost! Try again!")
+        document.getElementById('losses').textContent = "Losses: " + loss.toString();
+        document.getElementById('gameResult').textContent = computerSelection + " beats " + playerSelection + "!";
     }
 
+
+    scoreCheck();
+   
 }
 
-
+function scoreCheck(){
+    if(win === 5){
+        document.getElementById('gameResult').textContent = "Game Over! You have won 5 rounds!!";
+        document.getElementById('rock').disabled = true;
+        document.getElementById('paper').disabled = true;
+        document.getElementById('scissors').disabled = true;
+    }
+    else if(loss === 5){
+        document.getElementById('gameResult').textContent = "Game Over! You have lost 5 rounds!!";
+        document.getElementById('rock').disabled = true;
+        document.getElementById('paper').disabled = true;
+        document.getElementById('scissors').disabled = true;
+    }
+}
 
 
 //win checking function that returns loss, win, or draw
